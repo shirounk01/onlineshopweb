@@ -59,7 +59,6 @@ export const Header: FC = () => {
             <IconButton
               size="large"
               aria-label="account of current user"
-              aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
@@ -67,7 +66,6 @@ export const Header: FC = () => {
               <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             </IconButton>
             <Menu
-              id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",

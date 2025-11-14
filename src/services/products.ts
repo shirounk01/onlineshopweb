@@ -9,3 +9,11 @@ export async function getProducts() {
 
   return res;
 }
+
+export async function createProduct(product: Product) {
+  const res = await API.post<Product>("products", product, {
+    redirectWhenUnauthorized: false,
+    headers: defaultHeaders,
+  });
+  return res;
+}

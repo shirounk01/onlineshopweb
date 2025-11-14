@@ -14,6 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import "../../styles.css";
+import { Link } from "react-router-dom";
 
 export const ProductLanding: FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -82,6 +83,8 @@ export const ProductLanding: FC = () => {
     "& .MuiTableCell-root": { backgroundColor: "#4a4a4a" },
   };
 
+  const createProduct = { route: "createProduct" };
+
   return (
     <div className="bodySettings">
       <TextField
@@ -109,6 +112,11 @@ export const ProductLanding: FC = () => {
       <Button variant="contained" color="error" onClick={resetFilters}>
         Reset
       </Button>
+      <Link to={`/${createProduct.route}`}>
+        <Button variant="contained" color="success">
+          Create
+        </Button>
+      </Link>
       <TableContainer component={Paper} sx={tableStyle}>
         <Table stickyHeader aria-label="simple table">
           <TableHead sx={headerStyle} className="tableHeadSettings">
