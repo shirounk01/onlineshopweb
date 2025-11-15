@@ -8,12 +8,3 @@ body {
     padding-left: 50px;
     padding-right: 50px;
 }
-
-.tableHeadSettings {
-    background-color: #4a4a4a;
-}
-
-.tableCell {
-    color: white !important;
-
-}

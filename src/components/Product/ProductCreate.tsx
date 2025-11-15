@@ -134,6 +134,7 @@ export const ProductCreate: FC = () => {
           <Grid size={12} mt={1}>
             <Button
               variant="contained"
+              color="success"
               onClick={() => {
                 saveProduct();
               }}

@@ -3,7 +3,11 @@ import type { Product } from "../../models/product";
 import { ProductRow } from "./ProductRow";
 import { getProducts } from "../../services/products";
 import {
+  Box,
   Button,
+  ButtonGroup,
+  Grid,
+  InputAdornment,
   Paper,
   Table,
   TableBody,
@@ -12,7 +16,9 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import "../../styles.css";
 import { Link } from "react-router-dom";
 
@@ -75,66 +81,122 @@ export const ProductLanding: FC = () => {
 
   const tableStyle = {
     minWidth: 700,
-    maxHeight: "calc(100vh - 120px)",
-    marginTop: "10px",
-  };
-
-  const headerStyle = {
-    "& .MuiTableCell-root": { backgroundColor: "#4a4a4a" },
+    maxHeight: "80vh",
+    "& .MuiTableCell-head": { backgroundColor: "#4a4a4a", color: "white" },
+    "& .MuiTableRow-root:nth-of-type(even)": { backgroundColor: "#e9e9e9ff" },
+    "& .MuiTableRow-root:hover": { backgroundColor: "#ccccccff" },
   };
 
   const createProduct = { route: "createProduct" };
 
+  const boxStyle = {
+    display: "flex",
+    justifyContent: "center",
+  };
+
+  const searchBarStyle = {
+    width: 1 / 2,
+    backgroundColor: "white",
+    boxShadow: 3,
+  };
+
   return (
-    <div className="bodySettings">
-      <TextField
-        id="outlined-basic"
-        label="Search products..."
-        variant="outlined"
-        value={query}
-        onChange={handleSearch}
-      />
-      <TextField
-        label="Min price"
-        type="number"
-        value={minPrice}
-        onChange={(e) => setMinPrice(Number(e.target.value))}
-      />
-      <TextField
-        label="Max price"
-        type="number"
-        value={maxPrice}
-        onChange={(e) => setMaxPrice(Number(e.target.value))}
-      />
-      <Button variant="contained" color="success" onClick={runFilters}>
-        Filter
-      </Button>
-      <Button variant="contained" color="error" onClick={resetFilters}>
-        Reset
-      </Button>
-      <Link to={`/${createProduct.route}`}>
-        <Button variant="contained" color="success">
-          Create
-        </Button>
-      </Link>
-      <TableContainer component={Paper} sx={tableStyle}>
-        <Table stickyHeader aria-label="simple table">
-          <TableHead sx={headerStyle} className="tableHeadSettings">
-            <TableRow>
-              {columns.map((column: string, index: number) => (
-                <TableCell key={index} align="left" className="tableCell">
-                  {column}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {displayProducts.map((product) => (
-              <ProductRow key={product.id} product={product} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+    <Box className="bodySettings">
+      <Grid container spacing={2}>
+        <Grid size={12} alignItems="center" justifyContent="center">
+          <Box sx={boxStyle}>
+            <TextField
+              id="outlined-basic"
+              label="Search products..."
+              variant="outlined"
+              fullWidth
+              sx={searchBarStyle}
+              value={query}
+              onChange={handleSearch}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+          </Box>
+        </Grid>
+
+        <Grid size={3}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h5">Filters</Typography>
+            <Box my={2}>
+              <TextField
+                label="Min price"
+                type="number"
+                sx={{ width: 1 / 2 }}
+                value={minPrice}
+                onChange={(e) => setMinPrice(Number(e.target.value))}
+              />
+              <TextField
+                label="Max price"
+                type="number"
+                sx={{ width: 1 / 2 }}
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+              />
+            </Box>
+            <ButtonGroup variant="contained" fullWidth>
+              <Button variant="contained" color="primary" onClick={runFilters}>
+                Filter
+              </Button>
+              <Button variant="contained" color="error" onClick={resetFilters}>
+                Reset
+              </Button>
+            </ButtonGroup>
+          </Paper>
+          <Link to={`/${createProduct.route}`}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="success"
+              sx={{ my: 2 }}
+            >
+              Create new product
+            </Button>
+          </Link>
+        </Grid>
+
+        <Grid size={9}>
+          <Paper elevation={3}>
+            <TableContainer component={Paper} sx={tableStyle}>
+              <Table stickyHeader aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column: string, index: number) => (
+                      <TableCell key={index} align="left">
+                        {column}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {displayProducts.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={999} align="center">
+                        No products found
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    displayProducts.map((product) => (
+                      <ProductRow key={product.id} product={product} />
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
