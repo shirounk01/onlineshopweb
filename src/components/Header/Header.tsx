@@ -13,6 +13,7 @@ import type { FC } from "react";
 import AdbIcon from "@mui/icons-material/Adb";
 import React from "react";
 import { Link } from "react-router-dom";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 const homeObj = { route: "", name: "Home" };
 const prodObj = { route: "products", name: "Products" };
@@ -63,7 +64,9 @@ export const Header: FC = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+              <ShoppingBagIcon
+                sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+              />
             </IconButton>
             <Menu
               anchorEl={anchorElNav}
@@ -92,6 +95,7 @@ export const Header: FC = () => {
             </Menu>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <ShoppingBagIcon sx={{ mr: 5, height: "auto" }} />
             {routes.map((obj) => (
               <Link
                 key={obj.route}
